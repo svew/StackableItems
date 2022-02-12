@@ -8,10 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import haveric.stackableItems.config.Config;
 import haveric.stackableItems.config.FurnaceXPConfig;
-import haveric.stackableItems.listeners.SIBlockListener;
-import haveric.stackableItems.listeners.SIHopperListener;
-import haveric.stackableItems.listeners.SIPlayerJoinQuitListener;
-import haveric.stackableItems.listeners.SIPlayerListener;
+import haveric.stackableItems.listeners.*;
 import haveric.stackableItems.util.FurnaceUtil;
 import haveric.stackableItems.util.InventoryUtil;
 import haveric.stackableItems.util.SIItems;
@@ -32,10 +29,26 @@ public class StackableItems extends JavaPlugin {
         PluginManager pm = getServer().getPluginManager();
 
         // Register the plugin events
-        pm.registerEvents(new SIPlayerListener(this), this);
-        pm.registerEvents(new SIHopperListener(), this);
         pm.registerEvents(new SIBlockListener(), this);
+        pm.registerEvents(new SICauldronChangeLevelListener(), this);
+        pm.registerEvents(new SIConsumeItemListener(), this);
+        pm.registerEvents(new SICraftItemListener(this), this);
+        //pm.registerEvents(new SICreativeClickListener(this), this); // Unfinished
+        pm.registerEvents(new SIEmptyBucketListener(), this);
+        pm.registerEvents(new SIEntityDamageListener(), this);
+        pm.registerEvents(new SIFillBucketListener(), this);
+        pm.registerEvents(new SIFurnaceSmeltListener(), this);
+        pm.registerEvents(new SIHopperListener(), this);
+        pm.registerEvents(new SIInventoryClickListener(this), this);
+        pm.registerEvents(new SIInventoryDragListener(), this);
+        pm.registerEvents(new SIPlayerClickListener(), this);
+        pm.registerEvents(new SIPlayerFishListener(), this);
+        pm.registerEvents(new SIPlayerIgniteBlockListener(), this);
         pm.registerEvents(new SIPlayerJoinQuitListener(), this);
+        pm.registerEvents(new SIPlayerPicksUpItemListener(), this);
+        pm.registerEvents(new SIPlayerPlaceBlockListener(this), this);
+        pm.registerEvents(new SIPlayerShearEntityListener(), this);
+        pm.registerEvents(new SIShootBowListener(), this);
 
         Config.init(this);
         FurnaceXPConfig.init(this);
