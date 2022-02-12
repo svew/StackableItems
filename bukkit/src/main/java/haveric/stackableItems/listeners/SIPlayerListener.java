@@ -229,7 +229,7 @@ public class SIPlayerListener implements Listener {
 
                                     // Add one set of items to the cursor
                                     cursorClone.setAmount(total);
-                                    event.setCursor(cursorClone);
+                                    player.setItemOnCursor(cursorClone);
                                     event.setResult(Result.DENY);
                                 }
                             }
@@ -890,7 +890,7 @@ public class SIPlayerListener implements Listener {
                                     }
                                     int furnaceHalf = amt - cursorHalf;
                                     clone.setAmount(cursorHalf);
-                                    event.setCursor(clone);
+                                    player.setItemOnCursor(clone);
 
                                     clone2.setAmount(furnaceHalf);
                                     event.setCurrentItem(clone2);
@@ -903,7 +903,7 @@ public class SIPlayerListener implements Listener {
                                         if (total <= maxPlayerInventory) {
                                             clone.setAmount(total);
                                             event.setCurrentItem(null);
-                                            event.setCursor(clone);
+                                            player.setItemOnCursor(clone);
                                             event.setResult(Result.DENY);
                                             Config.clearFurnace(furnace);
                                             xpItems = amt;
@@ -911,7 +911,7 @@ public class SIPlayerListener implements Listener {
                                             int left = total - maxPlayerInventory;
 
                                             clone.setAmount(maxPlayerInventory);
-                                            event.setCursor(clone);
+                                            player.setItemOnCursor(clone);
 
                                             if (left < 64) {
                                                 Config.clearFurnace(furnace);
@@ -973,7 +973,7 @@ public class SIPlayerListener implements Listener {
                                             clone2.setAmount(maxItems);
                                             FurnaceXPConfig.giveFurnaceXP(player, clone2);
 
-                                            event.setCursor(clone2);
+                                            player.setItemOnCursor(clone2);
                                         }
                                     } else {
                                         event.setCancelled(true);
@@ -1415,13 +1415,13 @@ public class SIPlayerListener implements Listener {
                 // Pick up a stack with an empty hand
                 if (cursorEmpty && !slotEmpty) {
                     if (clickedAmount <= maxItems && clickedAmount > clickedType.getMaxStackSize()) {
-                        event.setCursor(clicked.clone());
+                        player.setItemOnCursor(clicked.clone());
                         event.setCurrentItem(null);
                         event.setResult(Result.DENY);
                     } else if (clickedAmount > maxItems) {
                         ItemStack clone = clicked.clone();
                         clone.setAmount(maxItems);
-                        event.setCursor(clone);
+                        player.setItemOnCursor(clone);
 
                         ItemStack clone2 = clicked.clone();
                         clone2.setAmount(clickedAmount - maxItems);
@@ -1438,7 +1438,7 @@ public class SIPlayerListener implements Listener {
                     if (event.getSlotType() != SlotType.ARMOR && !isShulkerInShulker) {
                         if (cursorAmount <= maxItems) {
                             event.setCurrentItem(cursor.clone());
-                            event.setCursor(null);
+                            player.setItemOnCursor(null);
                             event.setResult(Result.DENY);
 
                             // These inventories need a 2 tick update for RecipeManager
@@ -1455,7 +1455,7 @@ public class SIPlayerListener implements Listener {
 
                             ItemStack toHold = cursor.clone();
                             toHold.setAmount(cursorAmount - maxItems);
-                            event.setCursor(toHold);
+                            player.setItemOnCursor(toHold);
 
                             event.setResult(Result.DENY);
                             InventoryUtil.updateInventory(player);
@@ -1476,7 +1476,7 @@ public class SIPlayerListener implements Listener {
                                     clone.setAmount(total);
                                     event.setCurrentItem(clone);
 
-                                    event.setCursor(null);
+                                    player.setItemOnCursor(null);
                                     event.setResult(Result.DENY);
 
                                     // These inventories need a 2 tick update for RecipeManager
@@ -1492,7 +1492,7 @@ public class SIPlayerListener implements Listener {
 
                                 ItemStack clone2 = cursor.clone();
                                 clone2.setAmount(total - maxItems);
-                                event.setCursor(clone2);
+                                player.setItemOnCursor(clone2);
 
                                 event.setResult(Result.DENY);
                                 // These inventories need a 2 tick update for RecipeManager
@@ -1504,7 +1504,7 @@ public class SIPlayerListener implements Listener {
                             // Swap two unstackable items
                             //player.sendMessage("Swap two unstackable items");
                             event.setCurrentItem(cursor.clone());
-                            event.setCursor(clicked.clone());
+                            player.setItemOnCursor(clicked.clone());
 
                             event.setResult(Result.DENY);
                             // These inventories need a 2 tick update for RecipeManager
@@ -1515,7 +1515,7 @@ public class SIPlayerListener implements Listener {
                     } else if (cursorAmount > SIItems.ITEM_DEFAULT_MAX) {
                         //player.sendMessage("Swap two items");
                         event.setCurrentItem(cursor.clone());
-                        event.setCursor(clicked.clone());
+                        player.setItemOnCursor(clicked.clone());
 
                         event.setResult(Result.DENY);
                         // These inventories need a 2 tick update for RecipeManager
@@ -1541,7 +1541,7 @@ public class SIPlayerListener implements Listener {
 
                                     event.setCurrentItem(clone);
                                     if (cursorAmount == 1) {
-                                        event.setCursor(null);
+                                        player.setItemOnCursor(null);
                                     } else {
                                         cursor.setAmount(cursorAmount - 1);
                                     }
@@ -1558,7 +1558,7 @@ public class SIPlayerListener implements Listener {
                             // Swap two unstackable Items
                             //player.sendMessage("RC:Swap two unstackable items");
                             event.setCurrentItem(cursor.clone());
-                            event.setCursor(clicked.clone());
+                            player.setItemOnCursor(clicked.clone());
 
                             event.setResult(Result.DENY);
                             // These inventories need a 2 tick update for RecipeManager
@@ -1569,7 +1569,7 @@ public class SIPlayerListener implements Listener {
                     } else if (cursorAmount > SIItems.ITEM_DEFAULT_MAX) {
                         //player.sendMessage("RC:Swap two items");
                         event.setCurrentItem(cursor.clone());
-                        event.setCursor(clicked.clone());
+                        player.setItemOnCursor(clicked.clone());
 
                         event.setResult(Result.DENY);
                         // These inventories need a 2 tick update for RecipeManager
@@ -1587,12 +1587,12 @@ public class SIPlayerListener implements Listener {
 
                         if (maxPickup < maxItems) {
                             clone.setAmount(maxPickup);
-                            event.setCursor(clone);
+                            player.setItemOnCursor(clone);
                             clone2.setAmount(clickedAmount - maxPickup);
 
                         } else {
                             clone.setAmount(maxItems);
-                            event.setCursor(clone);
+                            player.setItemOnCursor(clone);
                             clone2.setAmount(clickedAmount - maxItems);
                         }
                         event.setCurrentItem(clone2);
